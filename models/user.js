@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
-const dailyActivitySchema = new mongoose.Schema({
-  activity: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Activity',
-  },
-});
+// const dailyActivitySchema = new mongoose.Schema({
+//   activity: {
+//     type: mongoose.Schema.Types.ObjectId,
+//     ref: 'Activity',
+//   },
+// });
 
 const userSchema = new mongoose.Schema({
   name: {

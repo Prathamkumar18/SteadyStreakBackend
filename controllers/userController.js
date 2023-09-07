@@ -23,7 +23,7 @@ const userController = {
         daily,
       });
 
-      user.dateWiseData.dailyActivities.push(activity);
+      user.activities.push(activity);
       await user.save();
 
       res.status(200).json({ message: 'Activity added successfully' });
