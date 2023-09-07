@@ -14,7 +14,7 @@ const authController = {
         return res.status(401).json({ message: 'Invalid credentials' });
       }
       const token = jwt.sign({ id: user._id }, secretKey);
-      return res.json({ token });
+      return res.status(200).json({ token });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'An error occurred' });
@@ -27,10 +27,9 @@ const authController = {
       const hashedPassword = await bcrypt.hash(password, 10);
       const newUser = new User({ name, email, password: hashedPassword });
       await newUser.save();
-      res.json({ message: 'User registered successfully' });
+      res.status(200).json({ message: 'User registered successfully' });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'An error occurred' });
+      res.status(500).json({ message: error.message });
     }
   },
 

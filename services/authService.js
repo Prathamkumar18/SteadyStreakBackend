@@ -18,7 +18,6 @@ const authService = {
     }
   },
 
-  // Other methods...
 };
 
 module.exports = authService;
