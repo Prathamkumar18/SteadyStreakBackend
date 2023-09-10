@@ -61,14 +61,31 @@ const userController = {
         return res.status(404).json({ message: 'User not found' });
       }
   
-      const activities = user.activities;
-  
-      console.log('Activities retrieved:');
-      console.log(activities);
-  
+      const activities = user.activities;  
       res.status(200).json({ activities });
     } catch (error) {
       console.error('Error occurred:', error);
+      res.status(500).json({ message: 'An error occurred' });
+    }
+  },
+  deleteTask: async (req, res) => {
+    try {
+      const { email, title } = req.body;
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      const activityIndex = user.activities.findIndex(
+        (activity) => activity.title === title
+      );
+      if (activityIndex === -1) {
+        return res.status(404).json({ message: 'Task not found' });
+      }
+      user.activities.splice(activityIndex, 1);
+      await user.save();
+      res.status(204).send(); 
+    } catch (error) {
+      console.error(error);
       res.status(500).json({ message: 'An error occurred' });
     }
   },
