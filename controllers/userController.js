@@ -48,6 +48,30 @@ const userController = {
       res.status(500).json({ message: 'An error occurred' });
     }
   },
+  getAllUserActivities: async (req, res) => {
+    try {
+      const { email } = req.params;
+  
+      console.log(`Fetching activities for user with email: ${email}`);
+  
+      const user = await User.findOne({ email }).populate('activities');
+  
+      if (!user) {
+        console.log('User not found');
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      const activities = user.activities;
+  
+      console.log('Activities retrieved:');
+      console.log(activities);
+  
+      res.status(200).json({ activities });
+    } catch (error) {
+      console.error('Error occurred:', error);
+      res.status(500).json({ message: 'An error occurred' });
+    }
+  },
 };
 module.exports = userController;
 

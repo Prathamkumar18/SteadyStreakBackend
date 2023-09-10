@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
-// const dailyActivitySchema = new mongoose.Schema({
-//   activity: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: 'Activity',
-//   },
-// });
-
+const activitySchema = new mongoose.Schema({
+  color: String,
+  icon: String,
+  title: String,
+  description: String,
+  priority: String,
+  daily: String,
+});
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -28,12 +29,7 @@ const userSchema = new mongoose.Schema({
       points: Number,
     },
   ],
-  activities: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Activity',
-    },
-  ],
+  activities: [activitySchema],
 });
 
 userSchema.methods.comparePassword = async function (candidatePassword) {
