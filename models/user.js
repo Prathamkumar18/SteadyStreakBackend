@@ -8,6 +8,10 @@ const activitySchema = new mongoose.Schema({
   description: String,
   priority: String,
   daily: String,
+  isChecked: {
+    type: Boolean,
+    default: false,
+  },
 });
 const userSchema = new mongoose.Schema({
   name: {
@@ -27,6 +31,7 @@ const userSchema = new mongoose.Schema({
     {
       date: Date,
       points: Number,
+      activitiesCount: Number,
     },
   ],
   activities: [activitySchema],

@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const Activity = require('../models/activity');
+const cron = require('node-cron');
 
 const userController = {
   addActivity: async (req, res) => {
@@ -51,9 +52,7 @@ const userController = {
   getAllUserActivities: async (req, res) => {
     try {
       const { email } = req.params;
-  
-      console.log(`Fetching activities for user with email: ${email}`);
-  
+    
       const user = await User.findOne({ email }).populate('activities');
   
       if (!user) {
@@ -89,7 +88,25 @@ const userController = {
       res.status(500).json({ message: 'An error occurred' });
     }
   },
+  updateActivityStatus: async (req, res) => {
+    try {
+      const { email, title, isChecked } = req.body;
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      const activity = user.activities.find((activity) => activity.title === title);
+      if (!activity) {
+        return res.status(404).json({ message: 'Activity not found' });
+      }
+      activity.isChecked = isChecked;
+      await user.save();
+      res.status(200).json({ message: 'Activity status updated successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'An error occurred' });
+    }
+  },
 };
+
 module.exports = userController;
-
-
