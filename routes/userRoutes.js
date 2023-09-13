@@ -9,5 +9,6 @@ router.delete('/deleteTask', userController.deleteTask);
 router.put('/update-activity-status', userController.updateActivityStatus);
 router.post('/schedule-daily-update', userController.scheduleDailyUpdate); 
 router.put('/update-username/:email', userController.updateUsername); 
+router.put('/update-password/:email', userController.updatePassword); 
 
 module.exports = router;

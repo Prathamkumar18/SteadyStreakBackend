@@ -1,6 +1,6 @@
 const User = require('../models/user');
 const Activity = require('../models/activity');
-const cron = require('node-cron');
+const bcrypt = require('bcrypt');
 
 const userController = {
   addActivity: async (req, res) => {
@@ -152,6 +152,24 @@ const userController = {
       user.name = newUsername;
       await user.save();
       res.status(200).json({ message: 'Username updated successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'An error occurred' });
+    }
+  },
+  updatePassword: async (req, res) => {
+    try {
+      const { email } = req.params;
+      const { newPassword } = req.body;
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+      user.password = hashedPassword;
+      await user.save();
+      res.status(200).json({ message: 'Password updated successfully' });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'An error occurred' });
