@@ -13,7 +13,11 @@ const authController = {
       if (!user) {
         return res.status(401).json({ message: 'Invalid credentials' });
       }
-      const token = jwt.sign({ id: user._id }, secretKey);
+      const token = jwt.sign(
+        { id: user._id, email: user.email },
+        secretKey,
+        { expiresIn: '1h' }
+      );
       return res.status(200).json({ token });
     } catch (error) {
       console.error(error);

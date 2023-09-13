@@ -131,6 +131,9 @@ const userController = {
         });
       }
         user.activities = user.activities.filter((activity) => activity.daily !== "No");
+        user.activities.forEach((activity) => {
+          activity.isChecked = false;
+        });
         await user.save();
       res.status(200).json({ message: 'Daily update executed successfully' });
     } catch (error) {
@@ -138,7 +141,22 @@ const userController = {
       res.status(500).json({ message: 'An error occurred' });
     }
   },
-  
+  updateUsername: async (req, res) => {
+    try {
+      const { email } = req.params;
+      const { newUsername } = req.body;
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      user.name = newUsername;
+      await user.save();
+      res.status(200).json({ message: 'Username updated successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'An error occurred' });
+    }
+  },
 };
 
 module.exports = userController;

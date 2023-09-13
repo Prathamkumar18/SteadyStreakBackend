@@ -7,6 +7,7 @@ router.get('/get-username/:email', userController.getUserNameByEmail);
 router.get('/:email/all-activities', userController.getAllUserActivities);
 router.delete('/deleteTask', userController.deleteTask);
 router.put('/update-activity-status', userController.updateActivityStatus);
-router.post('/schedule-daily-update', userController.scheduleDailyUpdate); // Add this route
+router.post('/schedule-daily-update', userController.scheduleDailyUpdate); 
+router.put('/update-username/:email', userController.updateUsername); 
 
 module.exports = router;
