@@ -10,5 +10,6 @@ router.put('/update-activity-status', userController.updateActivityStatus);
 router.post('/schedule-daily-update', userController.scheduleDailyUpdate); 
 router.put('/update-username/:email', userController.updateUsername); 
 router.put('/update-password/:email', userController.updatePassword); 
+router.delete('/delete-account/:email', userController.deleteAccount);
 
 module.exports = router;

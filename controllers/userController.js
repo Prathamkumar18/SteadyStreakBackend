@@ -175,6 +175,22 @@ const userController = {
       res.status(500).json({ message: 'An error occurred' });
     }
   },
+  deleteAccount: async (req, res) => {
+    try {
+      const { email } = req.params;
+
+      const result = await User.deleteOne({ email });
+
+      if (result.deletedCount === 0) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      res.status(200).json({ message: 'User account deleted successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'An error occurred' });
+    }
+  },
 };
 
 module.exports = userController;
