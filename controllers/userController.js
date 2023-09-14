@@ -191,6 +191,21 @@ const userController = {
       res.status(500).json({ message: 'An error occurred' });
     }
   },
+  getLast7DateWiseData: async (req, res) => {
+    try {
+      const { email } = req.params;
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      user.dateWiseData.sort((a, b) => b.date - a.date);
+      const last7DateWiseData = user.dateWiseData.slice(0, 7);
+      res.status(200).json({ last7DateWiseData });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'An error occurred' });
+    }
+  },
 };
 
 module.exports = userController;

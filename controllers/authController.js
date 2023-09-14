@@ -16,7 +16,7 @@ const authController = {
       const token = jwt.sign(
         { id: user._id, email: user.email },
         secretKey,
-        { expiresIn: '1h' }
+        { expiresIn: '24h' }
       );
       return res.status(200).json({ token });
     } catch (error) {
