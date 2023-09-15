@@ -17,7 +17,6 @@ const authService = {
       throw new Error('Authentication failed');
     }
   },
-
 };
 
 module.exports = authService;

@@ -2,7 +2,6 @@ const authService = require('../services/authService');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
-
 const secretKey = process.env.JWT_SECRET || 'SteadyStride';
 
 const authController = {
@@ -36,7 +35,6 @@ const authController = {
       res.status(500).json({ message: error.message });
     }
   },
-
 };
 
 module.exports = authController;

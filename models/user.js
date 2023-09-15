@@ -13,6 +13,7 @@ const activitySchema = new mongoose.Schema({
     default: false,
   },
 });
+
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -43,5 +44,4 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
 };
 
 const User = mongoose.model('User', userSchema);
-
 module.exports = User;
