@@ -115,7 +115,7 @@ const userController = {
         console.log(`User with email ${email} not found`);
         return res.status(404).json({ message: 'User not found' });
       }
-        const points = user.activities.filter((act) => act.isChecked).length;
+      const points = user.activities.filter((act) => act.isChecked).length;
       const dateWiseEntryIndex = user.dateWiseData.findIndex(
         (entry) => entry.date.toDateString() === new Date(date).toDateString()
       );
@@ -123,11 +123,14 @@ const userController = {
       if (dateWiseEntryIndex !== -1) {
         user.dateWiseData[dateWiseEntryIndex].points = points;
         user.dateWiseData[dateWiseEntryIndex].activitiesCount = user.activities.length;
+        user.dateWiseData[dateWiseEntryIndex].percent =(user.activities.length==0)?0: (points/user.activities.length)*100;
+        
       } else {
         user.dateWiseData.push({
           date: new Date(date),
           points,
           activitiesCount: user.activities.length,
+          percent: (user.activities.length==0)?0:(points/user.activities.length)*100
         });
       }
         user.activities = user.activities.filter((activity) => activity.daily !== "No");

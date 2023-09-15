@@ -31,6 +31,7 @@ const userSchema = new mongoose.Schema({
     {
       date: Date,
       points: Number,
+      percent: Number,
       activitiesCount: Number,
     },
   ],
