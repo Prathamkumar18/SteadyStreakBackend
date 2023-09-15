@@ -92,14 +92,14 @@ const userController = {
       if (dateWiseEntryIndex !== -1) {
         user.dateWiseData[dateWiseEntryIndex].points = points;
         user.dateWiseData[dateWiseEntryIndex].activitiesCount = user.activities.length;
-        user.dateWiseData[dateWiseEntryIndex].percent =(user.activities.length==0)?0: (points/user.activities.length)*100;
+        user.dateWiseData[dateWiseEntryIndex].percent =(user.activities.length==0)?0: parseInt(points/user.activities.length)*100;
       } else {
         user.dateWiseData.push({
           date: new Date(date),
           points,
           activitiesCount: user.activities.length,
-          percent: (user.activities.length==0)?0:(points/user.activities.length)*100
-        });
+           percent :user.activities.length === 0 ? 0: parseInt((points / user.activities.length) * 100)
+          });
       }
         user.activities = user.activities.filter((activity) => activity.daily !== "No");
         user.activities.forEach((activity) => {
