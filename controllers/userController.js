@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
+const Activity = require('../models/activity');
 
 const userController = {
 //GET
@@ -52,7 +53,7 @@ const userController = {
 //POST
   addActivity: async (req, res) => {
     try {
-      const { email } = req.params; 
+      const { email } = req.params;
       const { activityName, color, icon, title, description, priority, daily } = req.body;
       const user = await User.findOne({ email });
       if (!user) {
