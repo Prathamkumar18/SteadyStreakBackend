@@ -41,14 +41,40 @@ const userController = {
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
+  
       user.dateWiseData.sort((a, b) => b.date - a.date);
-      const last7DateWiseData = user.dateWiseData.slice(0, 7);
+  
+      const today = new Date();
+      const last7DateWiseData = [];
+      
+      for (let i = 0; i < 7; i++) {
+        const dateToCheck = new Date(today);
+        dateToCheck.setDate(today.getDate() - i);
+        const dataForDate = user.dateWiseData.find(data => 
+          data.date.getFullYear() === dateToCheck.getFullYear() &&
+          data.date.getMonth() === dateToCheck.getMonth() &&
+          data.date.getDate() === dateToCheck.getDate()
+        );
+  
+        if (dataForDate) {
+          last7DateWiseData.push(dataForDate);
+        } else {
+          last7DateWiseData.push({
+            date: dateToCheck,
+            point: 0,
+            percent: 0,
+            activityCount: 0
+          });
+        }
+      }
+  
       res.status(200).json({ last7DateWiseData });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'An error occurred' });
     }
   },
+  
 
 //POST
   addActivity: async (req, res) => {
