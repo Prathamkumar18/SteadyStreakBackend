@@ -105,33 +105,36 @@ const userController = {
 
   scheduleDailyUpdate: async (req, res) => {
     try {
-      const { email, date } = req.body;
-      const user = await User.findOne({ email });  
+      const { email } = req.body;
+      const user = await User.findOne({ email });
       if (!user) {
         console.log(`User with email ${email} not found`);
         return res.status(404).json({ message: 'User not found' });
       }
+      const currentDate = new Date();
+      currentDate.setDate(currentDate.getDate() - 1);
+      const previousDay = currentDate.toISOString();
       const points = user.activities.filter((act) => act.isChecked).length;
       const dateWiseEntryIndex = user.dateWiseData.findIndex(
-        (entry) => entry.date.toDateString() === new Date(date).toDateString()
+        (entry) => entry.date.toDateString() === new Date(previousDay).toDateString()
       );
       if (dateWiseEntryIndex !== -1) {
         user.dateWiseData[dateWiseEntryIndex].points = points;
         user.dateWiseData[dateWiseEntryIndex].activitiesCount = user.activities.length;
-        user.dateWiseData[dateWiseEntryIndex].percent =(user.activities.length==0)?0: parseInt(points/user.activities.length)*100;
+        user.dateWiseData[dateWiseEntryIndex].percent = (user.activities.length == 0) ? 0 : parseInt(points / user.activities.length) * 100;
       } else {
         user.dateWiseData.push({
-          date: new Date(date),
+          date: new Date(previousDay),
           points,
           activitiesCount: user.activities.length,
-           percent :user.activities.length === 0 ? 0: parseInt((points / user.activities.length) * 100)
-          });
-      }
-        user.activities = user.activities.filter((activity) => activity.daily !== "No");
-        user.activities.forEach((activity) => {
-          activity.isChecked = false;
+          percent: user.activities.length === 0 ? 0 : parseInt((points / user.activities.length) * 100)
         });
-        await user.save();
+      }
+      user.activities = user.activities.filter((activity) => activity.daily !== "No");
+      user.activities.forEach((activity) => {
+        activity.isChecked = false;
+      });
+      await user.save();
       res.status(200).json({ message: 'Daily update executed successfully' });
     } catch (error) {
       console.error(error);
