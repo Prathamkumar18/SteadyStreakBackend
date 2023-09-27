@@ -127,7 +127,7 @@ const userController = {
           date: new Date(previousDay),
           points,
           activitiesCount: user.activities.length,
-          percent: user.activities.length === 0 ? 0 : parseInt((points / user.activities.length) * 100)
+          percent: user.activities.length === 0 ? 0 : parseInt((points * 100)/ user.activities.length)
         });
       }
       user.activities = user.activities.filter((activity) => activity.daily !== "No");
@@ -235,7 +235,6 @@ const userController = {
       res.status(500).json({ message: 'An error occurred' });
     }
   },
-  
 };
 
 module.exports = userController;
