@@ -105,15 +105,13 @@ const userController = {
 
   scheduleDailyUpdate: async (req, res) => {
     try {
-      const { email } = req.body;
+      const { email,date } = req.body;
       const user = await User.findOne({ email });
       if (!user) {
         console.log(`User with email ${email} not found`);
         return res.status(404).json({ message: 'User not found' });
       }
-      const currentDate = new Date();
-      currentDate.setDate(currentDate.getDate() - 1);
-      const previousDay = currentDate.toISOString();
+      const previousDay = date;
       const points = user.activities.filter((act) => act.isChecked).length;
       const dateWiseEntryIndex = user.dateWiseData.findIndex(
         (entry) => entry.date.toDateString() === new Date(previousDay).toDateString()
@@ -121,7 +119,7 @@ const userController = {
       if (dateWiseEntryIndex !== -1) {
         user.dateWiseData[dateWiseEntryIndex].points = points;
         user.dateWiseData[dateWiseEntryIndex].activitiesCount = user.activities.length;
-        user.dateWiseData[dateWiseEntryIndex].percent = (user.activities.length == 0) ? 0 : parseInt(points / user.activities.length) * 100;
+        user.dateWiseData[dateWiseEntryIndex].percent = (user.activities.length == 0) ? 0 : parseInt((points * 100)/ user.activities.length);
       } else {
         user.dateWiseData.push({
           date: new Date(previousDay),
