@@ -107,7 +107,7 @@ const userController = {
     try {
       const { email,date } = req.body;
       const user = await User.findOne({ email });
-      if (!user) {
+      if (!user) { 
         console.log(`User with email ${email} not found`);
         return res.status(404).json({ message: 'User not found' });
       }

@@ -12,6 +12,10 @@ const activitySchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  isPending: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const userSchema = new mongoose.Schema({
