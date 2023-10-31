@@ -143,7 +143,7 @@ const userController = {
 //UPDATE
   updateActivityStatus: async (req, res) => {
     try {
-      const { email, title, isChecked } = req.body;
+      const { email, title, isPending } = req.body;
       const user = await User.findOne({ email });
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
@@ -152,7 +152,7 @@ const userController = {
       if (!activity) {
         return res.status(404).json({ message: 'Activity not found' });
       }
-      activity.isChecked = isChecked;
+      activity.isPending = isPending;
       await user.save();
       res.status(200).json({ message: 'Activity status updated successfully' });
     } catch (error) {
