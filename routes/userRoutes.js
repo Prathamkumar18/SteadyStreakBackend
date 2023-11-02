@@ -9,6 +9,7 @@ router.post('/schedule-daily-update', userController.scheduleDailyUpdate);
 router.post('/add-activity/:email', userController.addActivity);
 router.put('/update-activity-status', userController.updateActivityStatus);
 router.put('/update-username/:email', userController.updateUsername); 
+router.put('/update-rating/:email', userController.updateRating); 
 router.put('/update-password/:email', userController.updatePassword); 
 router.delete('/delete-account/:email', userController.deleteAccount);
 router.delete('/deleteTask', userController.deleteTask);

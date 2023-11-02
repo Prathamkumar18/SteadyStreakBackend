@@ -32,6 +32,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  upvoteCount:{
+    type: Number,
+  },
+  downvoteCount:{
+    type:Number
+  },
   dateWiseData: [
     {
       date: Date,

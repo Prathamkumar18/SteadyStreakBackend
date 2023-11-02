@@ -198,6 +198,24 @@ const userController = {
     }
   },
 
+  updateRating: async (req, res) => {
+    try {
+      const { email } = req.params;
+      const { upvote } = req.body;
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      if(upvote==1)user.upvoteCount+=1;
+      else user.downvoteCount+=1;
+      await user.save();
+      res.status(200).json({ message: 'Password updated successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'An error occurred' });
+    }
+  },
+
 //DELETE
   deleteTask: async (req, res) => {
     try {
