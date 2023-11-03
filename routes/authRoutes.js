@@ -6,3 +6,5 @@ router.post('/login', authController.login);
 router.post('/signup', authController.signup);
 
 module.exports = router;
+
+//Router is used for handling the routes.

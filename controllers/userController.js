@@ -1,6 +1,6 @@
 const User = require('../models/user');
+const Activity = require('../models/user');
 const bcrypt = require('bcrypt');
-const Activity = require('../models/activity');
 
 const userController = {
 //GET
@@ -21,12 +21,12 @@ const userController = {
   getAllUserActivities: async (req, res) => {
     try {
       const { email } = req.params;
-      const user = await User.findOne({ email }).populate('activities');
+      const user = await User.findOne({ email });
       if (!user) {
         console.log('User not found');
         return res.status(404).json({ message: 'User not found' });
       }
-      const activities = user.activities;  
+      const activities = user.activities; 
       res.status(200).json({ activities });
     } catch (error) {
       console.error('Error occurred:', error);
@@ -80,13 +80,12 @@ const userController = {
   addActivity: async (req, res) => {
     try {
       const { email } = req.params;
-      const { activityName, color, icon, title, description, priority, daily } = req.body;
+      const { color, icon, title, description, priority, daily } = req.body;
       const user = await User.findOne({ email });
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
       const activity = new Activity({
-        activityName,
         color,
         icon,
         title,

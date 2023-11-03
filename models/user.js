@@ -54,4 +54,9 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
 };
 
 const User = mongoose.model('User', userSchema);
-module.exports = User;
+const Activity = mongoose.model('Activity', activitySchema);
+module.exports = User,Activity;
+
+//Bcrypt is used for securely hashing and salting passwords in order to enhance password storage security in applications.
+//Hashing is the process of converting data into a fixed-length string of characters.
+//Salting is the practice of adding a random value to data before hashing to enhance security.

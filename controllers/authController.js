@@ -38,3 +38,9 @@ const authController = {
 };
 
 module.exports = authController;
+
+//When you declare a function as async, it means that this function can contain asynchronous operations. 
+//Asyncronous operation are those operation that takes some time to complete.
+//await make entire async function to pause the execution until the promise is either fulfilled or rejected.
+//Authentication is used to identify the user..
+//Authorization is used to check what are the resources that are accesseble to the user.
